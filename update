@@ -1,0 +1,4 @@
+#! /bin/bash
+
+rm ./*.java
+cp /mnt/hgfs/Projects/Scheduler/src/*.java ./
