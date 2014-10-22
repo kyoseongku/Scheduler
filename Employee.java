@@ -129,9 +129,9 @@ public class Employee {
   }
   
   public void edit(String position, String phone) {
-    if(!position.equals(""))
+    if(position != null && !position.equals(""))
       this.position = position;
-    if(!phone.equals(""))
+    if(phone != null && !phone.equals(""))
       this.phone = phone;
   }
   

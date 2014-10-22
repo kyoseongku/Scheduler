@@ -173,11 +173,17 @@ public class ScheduleMaker {
   public void editEmployee(Employee emp, String position, String phone)
     throws Exception {
     
+    String oldPosition = emp.getPosition();
     emp.edit(position, phone);
     FileWriter efw = new FileWriter("employees/" +emp.fileName());
     PrintWriter empWriter = new PrintWriter(new BufferedWriter(efw));
     empWriter.print(emp.fileData());
     empWriter.close();
+    
+    if(!isHeldPosition(oldPosition))
+      posList.remove(oldPosition);
+    if(position != null && !position.equals("") && isNewPosition(position))
+      posList.add(position);
   }
   
   
@@ -427,8 +433,7 @@ public class ScheduleMaker {
   
   
   /**
-   * Takes a String representation of time in either 12-hour format and
-   * converts it into an integer representation
+   * Takes a String version of time and converts it into an integer version
    */
   private int timeStrToInt(String time) {
     if(time.equals("Closed"))
@@ -439,7 +444,7 @@ public class ScheduleMaker {
     int hours = 0;
     int minutes;
     
-    if(time.charAt(time.length()-2) == 'P')
+    if(time.charAt(time.length()-2) == 'P' && !time.substring(0,2).equals("12"))
       hours = 12;
     
     Scanner timeScan = new Scanner(time.substring(0, time.length()-3));

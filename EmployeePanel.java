@@ -17,6 +17,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -227,21 +228,27 @@ public class EmployeePanel extends JPanel {
   
   
   private JScrollPane setupRemovePanel() {
-    JPanel panel = new JPanel();
-    panel.setBackground(Color.WHITE);
-    panel.setLayout(new GridLayout(5, 2, 10, 10));
-    panel.setPreferredSize(new Dimension(150, 50));
-    
-    CheckListener cl = new CheckListener();
-    for(int i = 0; i < sm.empList.size(); i++) {
-      JCheckBox temp = new JCheckBox(sm.empList.get(i).getName());
-      temp.addItemListener(cl);
-      temp.setBackground(Color.WHITE);
-      panel.add(temp);
+    if(sm.empList.size() == 0) {
+      String msg = "There are no employees to remove";
+      return new JScrollPane(GUI.msgPanel(msg, new Dimension(200, 200)));
     }
-    
-    JScrollPane outerPanel = new JScrollPane(panel);
-    return outerPanel;
+    else {
+      JPanel panel = new JPanel();
+      panel.setBackground(Color.WHITE);
+      panel.setLayout(new GridLayout(5, 2, 10, 10));
+      panel.setPreferredSize(new Dimension(150, 50));
+      
+      CheckListener cl = new CheckListener();
+      for(int i = 0; i < sm.empList.size(); i++) {
+        JCheckBox temp = new JCheckBox(sm.empList.get(i).getName());
+        temp.addItemListener(cl);
+        temp.setBackground(Color.WHITE);
+        panel.add(temp);
+      }
+      
+      JScrollPane outerPanel = new JScrollPane(panel);
+      return outerPanel;
+    }
   }
   
 //==============================================================================
